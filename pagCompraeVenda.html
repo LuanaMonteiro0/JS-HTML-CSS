@@ -121,7 +121,7 @@
                 let insira = document.getElementById("escritaAqui");
                 alert(insira)
                 insira.innerHTML = "";
-                for(i=0; i<listaObCompra.lengh; i++){
+                for(i=0; i<listaObCompra.length; i++){
                     insira.innerHTML += "<tr>" + "<td>" + listaObCompra[i].cpf + "</td>" + "<td>" + listaObCompra[i].cod + "</td>" +
                         "<td>" + listaObCompra[i].data + "</td>" + "<td>" + listaObCompra[i].hora + "</td>" + "<td>" + listaObCompra[i].preco + "</td>" + "</tr>";
                     alert("to auiiiii");
@@ -138,17 +138,11 @@
 
                 let comprado = {};
                 comprado.cpf = cpf;
-                alert(comprado.cpf)
                 comprado.cod = cod;
-                alert(comprado.cod)
                 comprado.data = data;
-                alert(comprado.data)
                 comprado.hora = hora;
-                alert(comprado.hora)
                 comprado.preco = valor;
-                alert(comprado.preco)
                 listaObCompra.unshift(comprado);
-                alert(listaObCompra);
                 mostrarNaTable();
             }
 
