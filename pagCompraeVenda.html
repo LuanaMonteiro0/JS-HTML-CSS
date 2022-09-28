@@ -117,16 +117,15 @@
                return objetoValorado;
             }
             function mostrarNaTable(){
+                let table = document.getElementById("tableResultante");
+                table.innerHTML = '<table><thead><tr><th>CPF cliente</th><th>Codigo Do Produto</th><th>Data da Compra</th><th>Horario (brasília)</th><th>Valor do Produto</th></tr></thead><tbody id="escritaAqui"><tr><td>12315416598</td><td>22525</td><td>23/02/2021</td><td>16:49</td><td>128,09</td></tr></tbody></table>';
                 let i;
                 let insira = document.getElementById("escritaAqui");
-                alert(insira)
                 insira.innerHTML = "";
                 for(i=0; i<listaObCompra.length; i++){
                     insira.innerHTML += "<tr>" + "<td>" + listaObCompra[i].cpf + "</td>" + "<td>" + listaObCompra[i].cod + "</td>" +
                         "<td>" + listaObCompra[i].data + "</td>" + "<td>" + listaObCompra[i].hora + "</td>" + "<td>" + listaObCompra[i].preco + "</td>" + "</tr>";
-                    alert("to auiiiii");
                 }
-                alert('aaaa')
 
             }
             function inserirPCompraEVenda(){
@@ -143,7 +142,6 @@
                 comprado.hora = hora;
                 comprado.preco = valor;
                 listaObCompra.unshift(comprado);
-                mostrarNaTable();
             }
 
         </script>
@@ -209,29 +207,10 @@
                         <br><br>
                     </form>
                 </div>
-                <button onclick="inserirPCompraEVenda()"><img src="Trabalheira PW1\upload-download-svgrepo-com.svg" height="128px" width="128px"></button>
-                <div id='tableResultante'>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>CPF cliente</th>
-                                <th>Codigo Do Produto</th>
-                                <th>Data da Compra</th>
-                                <th>Horario (brasília)</th>
-                                <th>Valor do Produto</th>
-                            </tr>
-                        </thead>
-                        <tbody id="escritaAqui">
-                            <tr>
-                                <td>12315416598</td>
-                                <td>22525</td>
-                                <td>23/02/2021</td>
-                                <td>16:49</td>
-                                <td>128,09</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <button onclick="inserirPCompraEVenda()">INSERIR</button>
+                <!--não faz sentido impedir o cadastro da compra de um mesmo produto-->
+                <button onclick="mostrarNaTable()">MOSTRAR TUDO</button>
+                <div id='tableResultante'></div>
                 <h1 style="text-align: center;">Pesquisa de vendas executadas por CPF</h1>
                 <hr style="border: 2px groove brown;">
                 <div id="divBusca">
@@ -246,3 +225,4 @@
         </footer>
     </body>
 </html>
+
