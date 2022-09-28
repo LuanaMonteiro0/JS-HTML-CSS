@@ -63,7 +63,96 @@
                 color: azure;
                 font-size: larger;
             }
+            table, tr, th, td{
+                color: darkslateblue;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                text-align: center;
+                border: 3px groove brown;
+            }
+            table{
+                background-color: brown;
+            }
+            th{
+                background-color: coral;
+            }
+            .impar{
+                background-color: khaki;
+            }
+            .par{
+                background-color:darkkhaki;
+            }
+            #divBusca{
+                margin: auto;
+                background-color:coral;
+                border:solid 1px;
+                border-radius:15px;
+                width:300px;
+            }
+            #txtBusca{
+                color: brown;
+                float:left;
+                background-color:transparent;
+                padding-left:5px;
+                font-size:18px;
+                border:none;
+                height:32px;
+                width:260px;
+                }
+            #buscado{
+                background-color: brown;
+            }
         </style>
+        <script>
+            let listaObCompra = [
+                    {
+                    cpf: "621654213",
+                    cod:"46353453",
+                    data:"435543",
+                    hora:"453453",
+                    preco:"435455"
+                }
+            ]
+            function pegaIdevalue(nome){
+               let objetoValorado = document.getElementById(nome).value;
+               return objetoValorado;
+            }
+            function mostrarNaTable(){
+                let i;
+                let insira = document.getElementById("escritaAqui");
+                alert(insira)
+                insira.innerHTML = "";
+                for(i=0; i<listaObCompra.lengh; i++){
+                    insira.innerHTML += "<tr>" + "<td>" + listaObCompra[i].cpf + "</td>" + "<td>" + listaObCompra[i].cod + "</td>" +
+                        "<td>" + listaObCompra[i].data + "</td>" + "<td>" + listaObCompra[i].hora + "</td>" + "<td>" + listaObCompra[i].preco + "</td>" + "</tr>";
+                    alert("to auiiiii");
+                }
+                alert('aaaa')
+
+            }
+            function inserirPCompraEVenda(){
+                let cpf = pegaIdevalue("cpfcliente");
+                let cod = pegaIdevalue("codogprod");
+                let data = pegaIdevalue("datacompra");
+                let hora = pegaIdevalue("horacompra");
+                let valor = pegaIdevalue("valorproduto");
+
+                let comprado = {};
+                comprado.cpf = cpf;
+                alert(comprado.cpf)
+                comprado.cod = cod;
+                alert(comprado.cod)
+                comprado.data = data;
+                alert(comprado.data)
+                comprado.hora = hora;
+                alert(comprado.hora)
+                comprado.preco = valor;
+                alert(comprado.preco)
+                listaObCompra.unshift(comprado);
+                alert(listaObCompra);
+                mostrarNaTable();
+            }
+
+        </script>
     </head>
     <body>
         <header id="cabeca" style="border-bottom: 4px groove brown;">
@@ -124,10 +213,37 @@
                         <br><br>
                         <input type="number" id="valorproduto" name="valorproduto">
                         <br><br>
-                        <input type="submit" value="Enviar">
-                        <br><br>
                     </form>
                 </div>
+                <button onclick="inserirPCompraEVenda()"><img src="Trabalheira PW1\upload-download-svgrepo-com.svg" height="128px" width="128px"></button>
+                <div id='tableResultante'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CPF cliente</th>
+                                <th>Codigo Do Produto</th>
+                                <th>Data da Compra</th>
+                                <th>Horario (brasília)</th>
+                                <th>Valor do Produto</th>
+                            </tr>
+                        </thead>
+                        <tbody id="escritaAqui">
+                            <tr>
+                                <td>12315416598</td>
+                                <td>22525</td>
+                                <td>23/02/2021</td>
+                                <td>16:49</td>
+                                <td>128,09</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h1 style="text-align: center;">Pesquisa de vendas executadas por CPF</h1>
+                <hr style="border: 2px groove brown;">
+                <div id="divBusca">
+                    <input type="text" id="txtBusca" placeholder="CPF 12131544454"/>
+                    <img src="/PW1/toppng.com-search-3-512x512.png" id="btnBusca" alt="Buscar" width="32" height="32">
+                </div><br>
             </section>
         </main>
         <footer id="pe" style="text-align: center; border-top: 4px groove brown;">
