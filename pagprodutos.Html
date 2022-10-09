@@ -63,7 +63,209 @@
                 color: azure;
                 font-size: larger;
             }
+            table, tr, th, td{
+                color: darkslateblue;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                text-align: center;
+                border: 3px groove brown;
+            }
+            table{
+                background-color: brown;
+            }
+            th{
+                background-color: coral;
+            }
+            .impar{
+                background-color: khaki;
+            }
+            .par{
+                background-color:darkkhaki;
+            }
+            #divBusca{
+                margin: auto;
+                background-color:coral;
+                border:solid 1px;
+                border-radius:15px;
+                width:300px;
+            }
+            #txtBusca{
+                color: brown;
+                float:left;
+                background-color:transparent;
+                padding-left:5px;
+                font-size:18px;
+                border:none;
+                height:32px;
+                width:260px;
+                }
+            #buscado{
+                background-color: brown;
+            }
         </style>
+        <script>
+            let listaObProd = [
+                    {
+                    cod:"46353453",
+                    desc:"435543",
+                    tam:"453453",
+                    peso:"453453",
+                    alt:"453453",
+                    preco:"435455",
+                    dec:"453453",
+                    dv:"453453"
+                },
+                {
+                    cod:"808080",
+                    desc:"505050",
+                    tam:"303030",
+                    peso:"707070",
+                    alt:"101010",
+                    preco:"49787",
+                    dec:"7546",
+                    dv:"94854"
+                }
+            ]
+            function pegaIdevalue(nome){
+               let objetoValorado = document.getElementById(nome).value;
+               return objetoValorado;
+            }
+            function mostrarNaTable(){
+                let table = document.getElementById("tableResultante");
+                table.innerHTML = '<table><thead><tr><th>Codigo do produto</th><th>descrição do produto</th><th>Tamanho</th><th>Peso</th><th>Altura</th><th>Preço</th><th>Desconto</th><th>Data de Validade</th></tr></thead><tbody id="escritaAqui"><tr><td>12315416598</td><td>22525</td><td>23/02/2021</td><td>16:49</td><td>128,09</td></tr></tbody></table>';
+                let i;
+                let insira = document.getElementById("escritaAqui");
+                insira.innerHTML = "";
+                for(i=0; i<listaObProd.length; i++){
+                    insira.innerHTML += "<tr>" + "<td>" + listaObProd[i].cod + "</td>" + "<td>" + listaObProd[i].desc + "</td>" +
+                        "<td>" + listaObProd[i].tam + "</td>" + "<td>" + listaObProd[i].peso + "</td>" + "<td>" + listaObProd[i].alt + "</td>" + + "<td>" + listaObProd[i].preco + "</td>" 
+                        + "<td>" + listaObProd[i].dec + "</td>" + + "<td>" + listaObProd[i].dv + "</td></tr>";
+                }
+
+            }
+            function inserirPCompraEVenda(){
+                cod = pegaIdevalue("codigo");
+                let flag = true;
+                for(let i = 0; i <listaObProd.length; i++){
+                    if(cod == listaObProd[i].cod){
+                        flag = false;
+                    }
+
+                }
+                if (flag){
+                    let produto = {};
+                    produto.cod = cod;
+                    produto.desc = pegaIdevalue("descricao");
+                    produto.tam = pegaIdevalue("tamanho");
+                    produto.peso = pegaIdevalue("peso");
+                    produto.alt = pegaIdevalue("altura");
+                    produto.preco = pegaIdevalue("preco");
+                    produto.dec = pegaIdevalue("desconto");
+                    produto.dv = pegaIdevalue("dataval");
+                    listaObProd.unshift(produto);
+                }
+                
+            }
+            function criaFormulario(id, num){
+                let formPesq = document.getElementById(id);
+                formPesq.innerHTML = "<form><label for='id'>ID: </label><input type:'number' id = 'id" + num + "'></form>"
+            }
+            function criaBot(id, funcao, msg){
+                let boot = document.getElementById(id);
+                boot.innerHTML +="<button onclick="+ funcao +">"+ msg + "</button>"
+            }
+            function crieparagrafo(id, nom){
+                let par = document.getElementById(id);
+                par.innerHTML += "<p id=" + nom + "></p>"
+            }
+            function mostrarUmSo(){
+                criaFormulario("qual1", 1)
+                criaBot("qual1", 'mostrarUmSoUm()', "VER ITEM")
+                crieparagrafo("qual1", "parag1")
+            }
+            function mostrarUmSoUm(){
+                let idMosUm = pegaIdevalue("id1")
+                let escAq = document.getElementById("parag1")
+                escAq.innerHTML= ""
+                if (idMosUm < listaObProd.length){
+                    for (let i = 0; i < listaObProd.length; i++){
+                    if (idMosUm == i){
+                        escAq.innerHTML += "ID: "+(i)+"<br>"+
+                                    "Codigo do produto: " + listaObProd[i].cod+"<br>"+
+                                    "Desconto: " + listaObProd[i].desc+"<br>"+
+                                    "Tamanho: " + listaObProd[i].tam+"<br>"+
+                                    "Peso: " + listaObProd[i].peso+"<br>"+
+                                    "Altura: " + listaObProd[i].alt+"<br>"+
+                                    "Preço: " + listaObProd[i].preco+"<br>"+
+                                    "Desconto: " + listaObProd[i].dec+"<br>"+
+                                    "Data de Validade: " + listaObProd[i].dv+"<br>"
+                    }
+                }
+                }
+                else{
+                        alert("Objeto não encontrado")
+                    }
+
+            }
+            function RemoveUmSo(){
+                criaFormulario("qual2", 2)
+                criaBot("qual2", 'RemoveUmSoUm()', "EXCLUIR")
+            }
+            function RemoveUmSoUm(){
+                let idExUm = pegaIdevalue("id2")
+                if(idExUm < listaObProd.length){
+                    for (let i = 0; i < listaObProd.length; i++){
+                        if (idExUm == i){
+                            listaObProd.splice(idExUm, 1)
+                            alert("Objeto removido com sucesso")
+                        }
+                    }
+
+                }
+                else{
+                    alert("Objeto não removido, pois não foi encontrado")
+                }
+            }
+
+
+            function alteraUmSo(){
+                criaFormulario("qual3", 3)
+                criaBot("qual3", "alteraUmSoUm()", "ALTERAR")
+            }
+            let idArm;
+            function alteraUmSoUm(){
+                let idAltUm = pegaIdevalue("id3")
+                if(idAltUm< listaObProd.length){
+                    for (let i = 0; i < listaObProd.length; i++){
+                        if (idAltUm == i){
+                            //alterado()
+                            idArm = i;
+                            let altForm = document.getElementById("qual3")
+                            altForm.innerHTML = "<form><label for='codN'>CODIGO: </label><input type:'number' id = 'codN'><br><br><label for='descN'>DESCRIÇÂO: </label><input type:'text' id = 'descN'><br><br>"+
+                                                "<label for='tamN'>TAMANHO: </label><input type:'number' id = 'tamN'><br><br><label for='pesoN'>PESO: </label><input type:'number' id = 'pesoN'><br><br><label for='altN'>ALTURA: </label><input type:'number' id = 'altN'><br><br><label for='precoN'>PREÇO: </label><input type:'number' id = 'precoN'><br><br><label for='decN'>DESCONTO: </label><input type:'number' id = 'decN'><br><br><label for='dvN'>DATA DE VALIDADE: </label><input type:'date' id = 'dvN'><br><br></form>"
+                            criaBot("qual3", "alteraUltimate(idArm)", "SALVAR ALTERAÇÕES")
+
+
+                            //armazenaId(id)
+                        }
+                    }
+                }
+                else{alert("Objeto não encontrado, favor colocar outro id para alteração")}
+            }
+            /* function armazenaId(idArm){
+                return idArm;
+            }*/
+            function alteraUltimate(idArm){
+                listaObProd[idArm].cod = pegaIdevalue("codN");
+                listaObProd[idArm].desc = pegaIdevalue("descN");
+                listaObProd[idArm].tam = pegaIdevalue("tamN");
+                listaObProd[idArm].peso = pegaIdevalue("pesoN");
+                listaObProd[idArm].alt = pegaIdevalue("altN");
+                listaObProd[idArm].preco = pegaIdevalue("precoN");
+                listaObProd[idArm].dec = pegaIdevalue("decN");
+                listaObProd[idArm].dv = pegaIdevalue("dvN");
+                alert("Objeto alterado com sucesso!")
+            }
+        </script>
     </head>
     <body>
         <header id="cabeca" style="border-bottom: 4px groove brown;">
@@ -103,19 +305,19 @@
                 <hr style="border: 2px groove brown;">
                 <div id="Formularioprodutos">
                     <form style="text-align: center;">
-                        <label for="Codigo">Qual o codigo do produto?</label>
+                        <label for="codigo">Qual o codigo do produto?</label>
                         <br>
                         <input type="number" id="codigo" name="codigo">
                         <br><br>
-                        <label for="Descricao">Qual a descrição do produto?</label>
+                        <label for="descricao">Qual a descrição do produto?</label>
                         <br>
                         <input type="text" id="descricao" name="Descricao">
                         <br><br>
-                        <label for="Tamanho">Digite o tamanho do produto em cm</label>
+                        <label for="tamanho">Digite o tamanho do produto em cm</label>
                         <br>
                         <input type="number" id="tamanho" name="tamanho">
                         <br><br>
-                        <label for="Peso">Qual o peso do produto?</label>
+                        <label for="peso">Qual o peso do produto?</label>
                         <br>
                         <input type="number" id="peso" name="peso">
                         <br><br>
@@ -131,13 +333,27 @@
                         <br>
                         <input type="number" id="desconto" name="desconto">
                         <br><br>
-                        <label for="datadevalidade">Qual a data de validade?</label>
+                        <label for="dataval">Qual a data de validade?</label>
                         <br>
                         <input type="date" id="dataval" name="data de validade">
                         <br><br>
                         <input type="submit" value="Enviar">
                     </form>
                 </div>
+                <!--Feito-->
+                <button onclick="inserirPCompraEVenda()">INSERIR</button><br><br>
+                <!--Feito-->
+                <button onclick="mostrarNaTable()">MOSTRAR TUDO</button><br><br>
+                <!--feito dinamico lindo-->
+                <button onclick="mostrarUmSo()">MOSTRAR UM ITEM</button><br><br>
+                <div id = "qual1"></div>
+                <!--feito-->
+                <button onclick="alteraUmSo()">ALTERAR UM ITEM</button>
+                <div id = "qual3"></div><br>
+                <!--Feito-->
+                <button onclick="RemoveUmSo()">REMOVE UM ITEM</button>
+                <div id = "qual2"></div><br>
+                <div id='tableResultante'></div>
             </section>
         </main>
         <footer id="pe" style="text-align: center; border-top: 4px groove brown;">

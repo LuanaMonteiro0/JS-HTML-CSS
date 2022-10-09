@@ -110,6 +110,13 @@
                     data:"435543",
                     hora:"453453",
                     preco:"435455"
+                },
+                {
+                    cpf: "1111154213",
+                    cod:"46353453",
+                    data:"43558414546543",
+                    hora:"453453",
+                    preco:"435455"
                 }
             ]
             function pegaIdevalue(nome){
@@ -143,7 +150,106 @@
                 comprado.preco = valor;
                 listaObCompra.unshift(comprado);
             }
+            function criaFormulario(id, num){
+                let formPesq = document.getElementById(id);
+                formPesq.innerHTML = "<form><label for='id'>ID: </label><input type:'number' id = 'id" + num + "'></form>"
+            }
+            function criaBot(id, funcao, msg){
+                let boot = document.getElementById(id);
+                boot.innerHTML +="<button onclick="+ funcao +">"+ msg + "</button>"
+            }
+            function crieparagrafo(id, nom){
+                let par = document.getElementById(id);
+                par.innerHTML += "<p id=" + nom + "></p>"
+            }
+            function mostrarUmSo(){
+                criaFormulario("qual1", 1)
+                criaBot("qual1", 'mostrarUmSoUm()', "VER ITEM")
+                crieparagrafo("qual1", "parag1")
+            }
+            function mostrarUmSoUm(){
+                let idMosUm = pegaIdevalue("id1")
+                let escAq = document.getElementById("parag1")
+                escAq.innerHTML= ""
+                if (idMosUm < listaObCompra.length){
+                    for (let i = 0; i < listaObCompra.length; i++){
+                    if (idMosUm == i){
+                        escAq.innerHTML += "ID: "+(i)+"<br>"+
+                                    "CPF: " + listaObCompra[i].cpf+"<br>"+
+                                    "Codigo do Produto: " + listaObCompra[i].cod+"<br>"+
+                                    "Data: " + listaObCompra[i].data+"<br>"+
+                                    "Horario: " + listaObCompra[i].hora+"<br>"+
+                                    "Valor do Produto: " + listaObCompra[i].preco+"<br>"
+                    }
+                }
+                }
+                else{
+                        alert("Objeto não encontrado")
+                    }
 
+            }
+            function RemoveUmSo(){
+                criaFormulario("qual2", 2)
+                criaBot("qual2", 'RemoveUmSoUm()', "EXCLUIR")
+            }
+            function RemoveUmSoUm(){
+                let idExUm = pegaIdevalue("id2")
+                if(idExUm < listaObCompra.length){
+                    for (let i = 0; i < listaObCompra.length; i++){
+                        if (idExUm == i){
+                            listaObCompra.splice(idExUm, 1)
+                            alert("Objeto removido com sucesso")
+                        }
+                    }
+
+                }
+                else{
+                    alert("Objeto não removido, pois não foi encontrado")
+                }
+            }
+
+
+            function alteraUmSo(){
+                criaFormulario("qual3", 3)
+                criaBot("qual3", "alteraUmSoUm()", "ALTERAR")
+            }
+            let idArm;
+            function alteraUmSoUm(){
+                let idAltUm = pegaIdevalue("id3")
+                if(idAltUm< listaObCompra.length){
+                    for (let i = 0; i < listaObCompra.length; i++){
+                        if (idAltUm == i){
+                            //alterado()
+                            idArm = i;
+                            let altForm = document.getElementById("qual3")
+                            altForm.innerHTML = "<form><label for='cpfN'>CPF: </label><input type:'number' id = 'cpfN'><br><br><label for='codN'>CODIGO: </label><input type:'number' id = 'codN'><br><br></form>"+
+                                                "<label for='dataN'>DATA: </label><input type:'date' id = 'dataN'><br><br><label for='horaN'>HORARIO: </label><input type:'time' id = 'horaN'><br><br><label for='valN'>VALOR: </label><input type:'number' id = 'valN'><br><br>"
+                            criaBot("qual3", "alteraUltimate(idArm)", "SALVAR ALTERAÇÕES")
+
+
+                            //armazenaId(id)
+                        }
+                    }
+                }
+                else{alert("Objeto não encontrado, favor colocar outro id para alteração")}
+            }
+            /* function armazenaId(idArm){
+                return idArm;
+            }*/
+            function alterado(id){
+                let altForm = document.getElementById("qual3")
+                altForm.innerHTML = "<form><label for='cpfN'>CPF: </label><input type:'number' id = 'cpfN'><br><br><label for='codN'>CODIGO: </label><input type:'number' id = 'codN'><br><br></form>"+
+                "<label for='dataN'>DATA: </label><input type:'date' id = 'dataN'><br><br><label for='horaN'>HORARIO: </label><input type:'time' id = 'horaN'><br><br><label for='valN'>VALOR: </label><input type:'number' id = 'valN'><br><br>"
+                criaBot("qual3", "alteraUltimate(id)", "SALVAR ALTERAÇÕES")
+            }
+            function alteraUltimate(idArm){
+                listaObCompra[idArm].cpf = pegaIdevalue("cpfN");
+                listaObCompra[idArm].cod = pegaIdevalue("codN");
+                listaObCompra[idArm].data = pegaIdevalue("dataN");
+                listaObCompra[idArm].hora = pegaIdevalue("horaN");
+                listaObCompra[idArm].preco = pegaIdevalue("valN");
+                alert("Objeto alterado com sucesso!")
+            }
         </script>
     </head>
     <body>
@@ -207,16 +313,21 @@
                         <br><br>
                     </form>
                 </div>
-                <button onclick="inserirPCompraEVenda()">INSERIR</button>
+                <!--Feito-->
+                <button onclick="inserirPCompraEVenda()">INSERIR</button><br><br>
                 <!--não faz sentido impedir o cadastro da compra de um mesmo produto-->
-                <button onclick="mostrarNaTable()">MOSTRAR TUDO</button>
+                <!--Feito-->
+                <button onclick="mostrarNaTable()">MOSTRAR TUDO</button><br><br>
+                <!--feito dinamico lindo-->
+                <button onclick="mostrarUmSo()">MOSTRAR UM ITEM</button><br><br>
+                <div id = "qual1"></div>
+                <!--feito-->
+                <button onclick="alteraUmSo()">ALTERAR UM ITEM</button>
+                <div id = "qual3"></div><br>
+                <!--Feito-->
+                <button onclick="RemoveUmSo()">REMOVE UM ITEM</button>
+                <div id = "qual2"></div><br>
                 <div id='tableResultante'></div>
-                <h1 style="text-align: center;">Pesquisa de vendas executadas por CPF</h1>
-                <hr style="border: 2px groove brown;">
-                <div id="divBusca">
-                    <input type="text" id="txtBusca" placeholder="CPF 12131544454"/>
-                    <img src="/PW1/toppng.com-search-3-512x512.png" id="btnBusca" alt="Buscar" width="32" height="32">
-                </div><br>
             </section>
         </main>
         <footer id="pe" style="text-align: center; border-top: 4px groove brown;">
