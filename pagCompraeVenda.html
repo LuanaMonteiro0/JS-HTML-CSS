@@ -103,6 +103,10 @@
             }
         </style>
         <script>
+            //armazena os valores das duas localstorages pras duas variaveis
+            let localProdutos = JSON.parse(localStorage.getItem("CODsLocal"));
+            let localClientes = JSON.parse(localStorage.getItem("CPFsLocal"));
+
             let listaObCompra = [
                     {
                     cpf: "621654213",
@@ -119,6 +123,25 @@
                     preco:"435455"
                 }
             ]
+
+            function verificaSeValorNaStorageProdutos(codi){
+                let flag;
+                if(localProdutos.indexOf(codi) > -1)
+                    flag = 5
+                else flag = 0;
+                return flag;
+            }
+
+            function verificaSeValorNaStorageClientes(cpf){
+                let flag;
+                if(localClientes.indexOf(cpf) > -1)
+                    flag = 5   
+                else flag = 0;
+                return flag;
+            }
+
+
+            
             function pegaIdevalue(nome){
                let objetoValorado = document.getElementById(nome).value;
                return objetoValorado;
@@ -142,13 +165,27 @@
                 let hora = pegaIdevalue("horacompra");
                 let valor = pegaIdevalue("valorproduto");
 
-                let comprado = {};
-                comprado.cpf = cpf;
-                comprado.cod = cod;
-                comprado.data = data;
-                comprado.hora = hora;
-                comprado.preco = valor;
-                listaObCompra.unshift(comprado);
+                if (verificaSeValorNaStorageProdutos(cod) == 5 && verificaSeValorNaStorageClientes(cpf) == 5){
+                    let comprado = {};
+                    comprado.cpf = cpf;
+                    comprado.cod = cod;
+                    comprado.data = data;
+                    comprado.hora = hora;
+                    comprado.preco = valor;
+                    listaObCompra.unshift(comprado);
+                    alert("CADASTRO BEM SUCEDIDO")
+                }
+                else{
+                    if(verificaSeValorNaStorageProdutos(cod) == 0 && verificaSeValorNaStorageClientes(cpf) == 0){
+                        alert("CADASTRO DE PRODUTO E DE CLIENTE NÃO ENCONTRADO")
+                    }else{
+                        if(verificaSeValorNaStorageProdutos(cod) == 0){
+                            alert("CODIGO DE PRODUTO NÃO CADASTRADO")}
+                        if(verificaSeValorNaStorageClientes(cpf) == 0){
+                            alert("CPF DE CLIENTE NÃO CADASTRADO")
+                        }       
+                    }
+                }
             }
             function criaFormulario(id, num){
                 let formPesq = document.getElementById(id);

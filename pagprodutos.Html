@@ -125,6 +125,31 @@
                     dv:"94854"
                 }
             ]
+            //função global que envia dados para a localstorage e verifica se esses dados ja existem antes de enviar - função usada tanto na pagina de clientes como na de produtos
+            //essa função é chamada quando é feito um cadastro, ou quando é atualizado um cadastro, ou quando é removido um cadastro
+            //na pag prodtos o objeto é "listaObProd", o item armazenado é o codigo (cod) e o nome da localstorage é CODsLocal
+            function mandarPraStorage(nomeLocalStorage){
+                //percorre a array de objetos armazenando o item no vetor
+                let vet = [];
+                for(i = 0; i < listaObProd.length; i++){
+                    adicionar = listaObProd[i].cod;
+                    vet.push(adicionar);
+                }
+                //transforma a array em uma string json e coloca no localstorage
+                vetorStringzado = JSON.stringify(vet);
+                
+                 //verifica se o nome do localsotrage ja tem algum item, se tiver, apaga tudo e coloca os valores novos
+                if (localStorage.getItem(nomeLocalStorage) != null){
+                    localStorage.removeItem(nomeLocalStorage);
+                    localStorage.setItem(nomeLocalStorage,vetorStringzado);
+                 }
+                //se não tiver só coloca os valores
+                else{
+                    localStorage.setItem(nomeLocalStorage,vetorStringzado);
+                }
+            }    
+
+
             function pegaIdevalue(nome){
                let objetoValorado = document.getElementById(nome).value;
                return objetoValorado;
@@ -148,6 +173,7 @@
                 for(let i = 0; i <listaObProd.length; i++){
                     if(cod == listaObProd[i].cod){
                         flag = false;
+                        alert("Codigo do produto ja cadastrado. Insira outro")
                     }
 
                 }
@@ -162,6 +188,9 @@
                     produto.dec = pegaIdevalue("desconto");
                     produto.dv = pegaIdevalue("dataval");
                     listaObProd.unshift(produto);
+                    mandarPraStorage("CODsLocal");
+                    alert("Produto cadastrado")
+
                 }
                 
             }
@@ -216,6 +245,7 @@
                     for (let i = 0; i < listaObProd.length; i++){
                         if (idExUm == i){
                             listaObProd.splice(idExUm, 1)
+                            mandarPraStorage("CODsLocal")
                             alert("Objeto removido com sucesso")
                         }
                     }
@@ -263,6 +293,7 @@
                 listaObProd[idArm].preco = pegaIdevalue("precoN");
                 listaObProd[idArm].dec = pegaIdevalue("decN");
                 listaObProd[idArm].dv = pegaIdevalue("dvN");
+                mandarPraStorage("CODsLocal")
                 alert("Objeto alterado com sucesso!")
             }
         </script>

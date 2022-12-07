@@ -122,6 +122,27 @@
                                         telefone: '1698149855'
                                     }
                                     ];
+                //função global que envia dados para a localstorage e verifica se esses dados ja existem antes de enviar - função usada tanto na pagina de clientes como na de produtos
+                //essa função é chamada quando é feito um cadastro, ou quando é atualizado um cadastro, ou quando é removido um cadastro
+                //na pag clientes o objeto é "objetosClientes", o item armazenado é o CPF e o nome da localstorage é CPFsLocal
+                function mandarPraStorage(nomeLocalStorage){
+                    //percorre a array de objetos armazenando o item no vetor
+                    let vet = [];
+                    for(i = 0; i < objetosClientes.length; i++){
+                        adicionar = objetosClientes[i].cpf;
+                        vet.push(adicionar);
+                    }
+                    //transforma a array em uma string json e coloca no localstorage
+                    vetorStringzado = JSON.stringify(vet);
+                    //verifica se o nome do localsotrage ja tem algum item, se tiver, apaga tudo e coloca os valores novos
+                    if (localStorage.getItem(nomeLocalStorage) != null){
+                        localStorage.removeItem(nomeLocalStorage);
+                        localStorage.setItem(nomeLocalStorage,vetorStringzado);
+                    }
+                    //se não tiver só coloca os valores
+                    else{localStorage.setItem(nomeLocalStorage,vetorStringzado);}
+                }
+
                 function pegaIdevalue(nome){
                     let objetoValorado = document.getElementById(nome).value;
                     return objetoValorado;
@@ -188,14 +209,16 @@
                         }
                     }
                     if(flag){
-                        alert("Cliente já Cadastrado , insira outro nome.<br>");
+                        alert("Cliente já Cadastrado , insira outro nome.");
                     }else{
                         objetosClientes.unshift(oCliente);
+                        mandarPraStorage("CPFsLocal")
                         mostraObj();
                         }
                 }
                 function removerObj(){
                     objetosClientes.pop();
+                    mandarPraStorage("CPFsLocal")
                     mostraObj();
                 }
                 function mostrarumObjeto(){
@@ -214,6 +237,7 @@
                     if(idprocurado < objetosClientes.length){
                         for(i=0; i< objetosClientes.length;i++){
                             objetosClientes.splice(idprocurado,1);
+                            mandarPraStorage("CPFsLocal")
                             alert("A Remoção foi Concluida com Sucesso.<br>");
                         }
                     }else{
@@ -266,6 +290,7 @@
                     objetosClientes[idArm].cpf = pegaIdevalue("cpfN");
                     objetosClientes[idArm].salario = pegaIdevalue("salarioN");
                     objetosClientes[idArm].telefone = pegaIdevalue("telefoneN");
+                    mandarPraStorage("CPFsLocal")
                     alert("Objeto alterado com sucesso!")
                 }
             </script>
